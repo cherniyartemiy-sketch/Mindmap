@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Артём Черний · Карьерный МайндМэп</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#111320; --panel:#1B1F30; --panel-2:#232840; --line:#2F3652;
+    --ink:#EEF1FA; --muted:#858CA8;
+    --blue:#4A6CFF; --green:#22C58B; --amber:#F5A524; --red:#F2554B; --violet:#A855F7; --cyan:#22D3EE;
+    --r:14px; --gap:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  .mono{font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums}
+  .wrap{padding:22px;max-width:1680px;margin:0 auto}
+  a{color:inherit}
+  button{font-family:inherit}
+
+  /* ============ INTRO SCREEN ============ */
+  #intro{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:64px 22px 40px}
+  .intro-inner{max-width:860px;width:100%}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;color:var(--cyan);background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.3);padding:6px 14px;border-radius:100px;margin-bottom:22px}
+  .eyebrow i{width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  #intro h1{font-size:clamp(28px,4vw,42px);font-weight:800;letter-spacing:-.03em;line-height:1.15;margin-bottom:18px}
+  #intro h1 em{font-style:normal;background:linear-gradient(90deg,var(--blue),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+  #intro > .intro-inner > p.lead{font-size:16px;color:var(--muted);line-height:1.7;max-width:680px;margin-bottom:14px}
+  .why{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--blue);border-radius:12px;padding:18px 20px;margin:26px 0 40px;font-size:14px;line-height:1.7;color:#C7CCE2}
+  .why b{color:var(--ink)}
+
+  .steps-title{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+  .steps-title::after{content:"";flex:1;height:1px;background:var(--line)}
+
+  .step{display:grid;grid-template-columns:44px 1fr;gap:16px;margin-bottom:22px}
+  .step .num{width:44px;height:44px;border-radius:12px;background:var(--panel-2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:16px;color:var(--cyan);flex:none}
+  .step .body{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .step .body h4{font-size:14.5px;font-weight:600;margin-bottom:6px}
+  .step .body p{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:12px}
+  .video-ph{border:1.5px dashed #3A4160;border-radius:10px;background:repeating-linear-gradient(135deg,rgba(255,255,255,.015) 0 10px,transparent 10px 20px);aspect-ratio:16/9;max-width:420px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#5A6180;font-size:11.5px;text-align:center;padding:12px}
+  .video-ph svg{width:30px;height:30px;opacity:.6}
+  .video-ph b{color:#7A82A0;font-size:11.5px;font-weight:600}
+  .video-real{border-radius:10px;aspect-ratio:16/9;max-width:420px;width:100%;display:block;background:#000}
+
+  .cta-row{display:flex;align-items:center;gap:16px;margin-top:36px;flex-wrap:wrap}
+  #openDash{background:linear-gradient(135deg,var(--blue),#3653D9);color:#fff;border:0;padding:15px 30px;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:10px;transition:.2s;box-shadow:0 8px 24px -8px rgba(74,108,255,.6)}
+  #openDash:hover{transform:translateY(-2px);box-shadow:0 12px 28px -8px rgba(74,108,255,.75)}
+  #openDash svg{width:16px;height:16px;transition:.2s}
+  #openDash:hover svg{transform:translateX(3px)}
+  .cta-note{font-size:12px;color:var(--muted)}
+
+  .bio{margin-top:56px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px;display:grid;grid-template-columns:150px 1fr;gap:24px;align-items:center}
+  .photo-ph{width:150px;height:150px;border-radius:16px;border:1.5px dashed #3A4160;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#5A6180;font-size:11px;text-align:center;background:var(--panel-2);flex:none;overflow:hidden}
+  .photo-ph img{width:100%;height:100%;object-fit:cover;display:block}
+  .photo-ph svg{width:34px;height:34px;opacity:.55}
+  .bio-text h3{font-size:19px;font-weight:700;margin-bottom:4px}
+  .bio-text .role{font-size:12.5px;color:var(--cyan);font-family:'JetBrains Mono',monospace;margin-bottom:12px}
+  .bio-text p{font-size:13.5px;color:#B5BAD4;line-height:1.65}
+
+  /* ============ DASHBOARD SCREEN ============ */
+  #dashboard{display:none}
+  .backlink{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--muted);background:none;border:0;cursor:pointer;margin-bottom:16px;transition:.15s}
+  .backlink:hover{color:var(--ink)}
+  .backlink svg{width:13px;height:13px}
+
+  header{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:20px}
+  .who{display:flex;align-items:center;gap:14px}
+  .avatar{width:52px;height:52px;border-radius:14px;flex:none;border:1.5px solid var(--line);background:var(--panel-2);display:flex;align-items:center;justify-content:center;color:#5A6180;font-size:9px;text-align:center;overflow:hidden}
+  .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+  .who h1{font-size:24px;font-weight:700;letter-spacing:-.02em}
+  .who h1 span{color:var(--muted);font-weight:500}
+  .meta{margin-top:5px;font-size:12px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block;margin-right:5px;animation:pulse 2s infinite}
+
+  .filter-block{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+  .filter-cap{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted);letter-spacing:.06em}
+  .filter-cap b{color:var(--cyan)}
+  .filters{display:flex;gap:8px;background:var(--panel);padding:6px;border-radius:12px;border:1px solid var(--line)}
+  .filters button{background:transparent;border:0;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:13px;padding:10px 18px;border-radius:8px;cursor:pointer;transition:.18s;white-space:nowrap}
+  .filters button:hover{color:var(--ink)}
+  .filters button[aria-selected="true"]{background:var(--blue);color:#fff}
+  .filters button:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+
+  .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,200px)) 1fr;gap:var(--gap);margin-bottom:var(--gap)}
+  .main{display:grid;grid-template-columns:400px 1fr 280px;gap:var(--gap);margin-bottom:var(--gap)}
+  .col{display:flex;flex-direction:column;gap:var(--gap)}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px;transition:.25s}
+  .card.lit{border-color:var(--focus,var(--blue));box-shadow:0 0 0 1px var(--focus,var(--blue)),0 0 34px -8px var(--focus,var(--blue))}
+  .card h3{font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  .card h3 b{color:var(--accent,var(--cyan));font-weight:600}
+
+  .comment .top{margin-bottom:10px}
+  .comment-intro{font-size:10.5px;color:var(--muted);line-height:1.55;margin-bottom:12px;padding-bottom:12px;border-bottom:1px dashed var(--line)}
+  .comment-goals .g-title{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--violet);margin-bottom:8px}
+  .comment-goals .mission{font-size:10.5px;color:var(--ink);line-height:1.5;margin-bottom:10px;padding:8px 10px;background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.3);border-radius:8px}
+  .comment-goals .mission b{color:var(--violet);display:block;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+  .goal-item{display:flex;gap:7px;font-size:11px;line-height:1.5;color:#C7CCE2;margin-bottom:8px}
+  .goal-item:last-child{margin-bottom:0}
+  .goal-item .n{flex:none;width:16px;height:16px;border-radius:5px;background:rgba(168,85,247,.15);color:var(--violet);font-size:9.5px;font-weight:700;display:grid;place-items:center;font-family:'JetBrains Mono',monospace}
+  .goal-item b{color:var(--ink);font-weight:600}
+
+  .kpi .top{display:flex;align-items:center;gap:9px;margin-bottom:14px}
+  .kpi .top span{font-size:13px;font-weight:600;color:var(--ink)}
+  .chip{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;font-size:12px;flex:none}
+  .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+  .cols.cols-2{display:flex;flex-direction:column;gap:6px}
+  .cols.cols-2 .cell{min-width:0}
+  .cols.cols-2 .arrow{flex:none;color:var(--muted);font-size:13px;line-height:1;padding-left:2px}
+  .cell{padding:8px 6px;border-radius:9px;border:1px solid transparent;transition:.2s}
+  .cell.on{background:var(--panel-2);border-color:var(--line)}
+  .cell .lbl{font-size:9.5px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;margin-bottom:5px;white-space:nowrap}
+  .cell .val{font-size:19px;font-weight:700;line-height:1.15}
+  .cell:not(.on) .val{color:var(--muted);font-weight:600;font-size:16px}
+  .cell .val.val-sm{font-size:12px;font-weight:600;line-height:1.4}
+  .cell .dlt{font-size:10px;margin-top:4px;color:var(--green)}
+  .spark{margin-top:12px;display:block;width:100%;height:30px}
+
+  .sk{margin-bottom:13px}
+  .sk:last-child{margin-bottom:0}
+  .sk .row{display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px}
+  .sk .row b{font-weight:500}
+  .sk .row .pc{color:var(--muted)}
+  .track{height:7px;border-radius:4px;background:#2A3049;overflow:hidden}
+  .fill{height:100%;border-radius:4px;width:0;transition:width .7s cubic-bezier(.2,.8,.2,1),background .3s}
+  .gap-note{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);font-size:10.5px;color:var(--muted);line-height:1.5}
+
+  .res-caption{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.05em;color:var(--cyan);margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed var(--line)}
+  .res{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}
+  .res:last-child{border-bottom:1px solid var(--line);padding-bottom:9px}
+  .res-note{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);font-size:10.5px;color:var(--muted);line-height:1.5}
+  .res .bar{width:3px;border-radius:2px;flex:none;background:var(--cyan)}
+  .res b{display:block;font-size:12px;font-weight:600;margin-bottom:2px}
+  .res p{font-size:10.5px;color:var(--muted);line-height:1.45}
+
+  .al{border-radius:10px;padding:11px 12px;margin-bottom:10px;border-left:3px solid}
+  .al:last-child{margin-bottom:0}
+  .al .tag{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;margin-bottom:5px;display:flex;align-items:center;gap:6px}
+  .al .tag i{width:6px;height:6px;border-radius:50%;background:currentColor;font-style:normal}
+  .al b{display:block;font-size:12px;margin-bottom:5px;font-weight:600}
+  .al p{font-size:10.5px;color:var(--muted);line-height:1.5}
+  .crit{background:rgba(242,85,75,.09);border-color:var(--red)} .crit .tag{color:var(--red)}
+  .warn{background:rgba(245,165,36,.08);border-color:var(--amber)} .warn .tag{color:var(--amber)}
+  .info{background:rgba(74,108,255,.08);border-color:var(--blue)} .info .tag{color:var(--blue)}
+
+  .chart-cap{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--cyan);background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.25);padding:5px 12px;border-radius:100px;margin-bottom:12px;transition:.3s}
+  .chart svg{width:100%;height:auto;display:block}
+  .legend{display:flex;gap:20px;font-size:10.5px;color:var(--muted);margin-bottom:6px;flex-wrap:wrap}
+  .legend em{font-style:normal;display:inline-flex;align-items:center;gap:7px}
+  .key{width:22px;height:0;border-top:2px solid var(--blue)}
+  .key.dash{border-top:2px dashed var(--muted)}
+  .ax{stroke:var(--line);stroke-width:1}
+  .grid{stroke:var(--line);stroke-width:1;stroke-dasharray:2 6;opacity:.55}
+  .draw{fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;transition:stroke-dashoffset .85s cubic-bezier(.16,.8,.2,1)}
+  .draw.alt{stroke-width:2;stroke-dasharray:7 6 !important;opacity:.8}
+  .nd{fill:var(--blue);stroke:var(--bg);stroke-width:3;transition:opacity .3s,transform .3s}
+  .nd.alt{fill:var(--muted);stroke-width:2.5}
+  .tick{fill:var(--muted);font-size:11px;font-family:'JetBrains Mono',monospace}
+  .yl{fill:var(--muted);font-size:10px}
+  .mt{fill:var(--blue);font-size:12.5px;font-weight:700;font-family:'JetBrains Mono',monospace}
+  .mt.alt{fill:var(--muted);font-size:11px}
+  .mb{fill:var(--ink);font-size:11.5px}
+  .mb.alt{fill:var(--muted);font-size:10.5px}
+  .stage{opacity:0;transition:opacity .5s ease}
+  .stage.on{opacity:1}
+  .stage.always{opacity:1}
+
+  .acc{background:linear-gradient(180deg,rgba(168,85,247,.13),rgba(168,85,247,.03));border:1px solid rgba(168,85,247,.45);border-radius:var(--r);padding:16px}
+  .acc > h3{color:var(--violet);display:flex;align-items:center;gap:8px}
+  .acc .hint{font-size:10.5px;color:var(--muted);text-transform:none;letter-spacing:0;font-weight:400;margin-left:auto}
+  .accs{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--gap)}
+  .accs button{text-align:left;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--c);border-radius:11px;padding:13px;cursor:pointer;color:inherit;font:inherit;transition:.2s}
+  .accs button:hover,.accs button:focus-visible{transform:translateY(-3px);border-color:var(--c);outline:none}
+  .accs b{display:block;font-size:12px;margin-bottom:5px}
+  .accs p{font-size:10.5px;color:var(--muted);line-height:1.45;margin-bottom:9px}
+  .accs .to{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--c);display:flex;align-items:center;gap:5px}
+
+  footer{margin-top:18px;font-size:10.5px;color:var(--muted);text-align:center;line-height:1.6}
+
+  @media (max-width:1240px){
+    .kpis{grid-template-columns:repeat(2,1fr)}
+    .main{grid-template-columns:1fr}
+    .accs{grid-template-columns:repeat(2,1fr)}
+    .bio{grid-template-columns:1fr}
+    .photo-ph{margin:0 auto}
+  }
+  @media (max-width:600px){
+    .wrap{padding:14px}
+    .kpis,.accs{grid-template-columns:1fr}
+    header{flex-direction:column;align-items:flex-start}
+    .filter-block{align-items:flex-start;width:100%}
+    .filters{width:100%;justify-content:space-between}
+    .step{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion:reduce){ *{transition:none!important;animation:none!important} }
+</style>
+</head>
+<body>
+
+<!-- ======================= INTRO / PREVIEW SCREEN ======================= -->
+<section id="intro">
+  <div class="intro-inner">
+    <span class="eyebrow"><i></i>МайндМэп</span>
+    <h1>Моя профессиональная траектория — <em>в формате дашборда</em></h1>
+    <p class="lead">Это майндмэп на ближайшие три года: текущая точка, цели, шаги, ресурсы, риски и роль Академии ПМЭФ только вместо стикеров графики и переключатели.</p>
+
+    <div class="why">
+      <b>Почему дашборд, а не классическая схема:</b> Мне кажется, это свежая и креативная идея, при этом дашборд помогает чётко структурировать информацию и показать динамику. А ещё создание дашбордов — часть моей профессиональной деятельности, и такой формат показывает структурированность моего мышления и навык стратегического планирования.
+    </div>
+
+    <div class="steps-title">Основные моменты пользования дашбордом</div>
+
+    <div class="step">
+      <div class="num">1</div>
+      <div class="body">
+        <h4>Открывайте дашборд в полноэкранном режиме</h4>
+        <p>При открытии дашборда в полэкрана или на телефоне дашборд будет показываться в вертикальном формате.</p>
+        <video class="video-real" src="Shag1.mp4" controls preload="metadata"></video>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">2</div>
+      <div class="body">
+        <h4>Переключай периоды вверху справа</h4>
+        <p>Нажмите на «2026 · Now», «2027 · +1Y» или «2029 · +3Y» в правом верхнем углу дашборда и вся панель пересчитается под выбранный период: KPI, график траектории и уровень прокачки навыков.</p>
+        <video class="video-real" src="Shag2.mp4" controls preload="metadata"></video>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">3</div>
+      <div class="body">
+        <h4>Наведи курсор на блок «Катализаторы роста» внизу</h4>
+        <p>Каждая карточка это то, что даёт Академия ПМЭФ. При наведении подсвечивается конкретная KPI-карточка вверху, на которую эта возможность влияет.</p>
+        <video class="video-real" src="Shag3.mp4" controls preload="metadata"></video>
+      </div>
+    </div>
+
+    <div class="cta-row">
+      <button id="openDash">Открыть дашборд
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+      <span class="cta-note">Полная версия открывается на весь экран, работает без установки</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ======================= DASHBOARD SCREEN ======================= -->
+<section id="dashboard">
+<div class="wrap">
+
+  <button class="backlink" id="backToIntro">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+    Назад к описанию формата
+  </button>
+
+  <header>
+    <div class="who">
+      <div class="avatar" id="avatarSlot"><img src="photo1.jpg" alt="Артём Черний"></div>
+      <div>
+        <h1>Артём Черный <span>· Карьерный МайндМэп</span></h1>
+      </div>
+    </div>
+    <div class="filter-block">
+      <span class="filter-cap">ТЕКУЩИЙ ПЕРИОД: <b id="periodCap">2026 · Сейчас</b></span>
+      <div class="filters" role="tablist" aria-label="Горизонт планирования">
+        <button role="tab" aria-selected="true"  data-p="0">2026 · Now</button>
+        <button role="tab" aria-selected="false" data-p="1">2027 · +1Y</button>
+        <button role="tab" aria-selected="false" data-p="2">2029 · +3Y</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="kpis" id="kpis"></section>
+
+  <div class="main">
+    <div class="col">
+      <div class="card">
+        <h3><b>▮</b> Навык</h3>
+        <div id="skills"></div>
+        <p class="gap-note" id="gapNote"></p>
+      </div>
+      <div class="card">
+        <h3><b>▮</b> Ресурсы</h3>
+        <div id="res"></div>
+      </div>
+    </div>
+
+    <div class="card chart">
+      <h3 style="--accent:var(--blue)"><b>▮</b> Дорожная карта</h3>
+      <span class="chart-cap" id="chartCap">Показан период: 2026 (сейчас)</span>
+      <div class="legend">
+        <em><span class="key"></span>Развитие в Райффайзен</em>
+        <em><span class="key dash"></span>Развитие в другой компании</em>
+      </div>
+      <svg viewBox="0 0 1040 570" role="img" aria-label="График карьерной траектории 2026–2029 с основным и альтернативным сценарием, раскрывается по периодам">
+        <line class="grid" x1="95" y1="140" x2="1000" y2="140"/>
+        <line class="grid" x1="95" y1="290" x2="1000" y2="290"/>
+        <line class="grid" x1="95" y1="440" x2="1000" y2="440"/>
+        <line class="ax" x1="95" y1="60" x2="95" y2="490"/>
+        <line class="ax" x1="95" y1="490" x2="1000" y2="490"/>
+        <text class="yl" x="85" y="144" text-anchor="end">высокий</text>
+        <text class="yl" x="85" y="294" text-anchor="end">средний</text>
+        <text class="yl" x="85" y="444" text-anchor="end">начальный</text>
+        <text class="yl" x="20" y="80">масштаб</text>
+        <text class="yl" x="20" y="94">влияния</text>
+
+        <g class="stage always">
+          <circle class="nd" cx="185" cy="420" r="8"/>
+          <text class="mt" x="212" y="334">2026 · СЕЙЧАС</text>
+          <text class="mb" x="212" y="356">Стажёр в Райффайзенбанке</text>
+          <text class="mb" x="212" y="374">Победы в кейс-чемпионатах</text>
+          <text class="mb" x="212" y="392">Обмен в США</text>
+          <text class="mb" x="212" y="410">Студент ФБЛ</text>
+          <text class="tick" x="185" y="518" text-anchor="middle">2026</text>
+        </g>
+
+        <g class="stage" data-s="1" id="stage1">
+          <path id="segA" class="draw" d="M185,420 L525,270" style="stroke:var(--blue)"/>
+          <path id="segAalt" class="draw alt" d="M185,420 L525,370" style="stroke:var(--muted)"/>
+          <circle class="nd" cx="525" cy="270" r="8"/>
+          <circle class="nd alt" cx="525" cy="370" r="6"/>
+          <text class="mt" x="552" y="184">2027 · +1 ГОД</text>
+          <text class="mb" x="552" y="206">Мидл-аналитик</text>
+          <text class="mb" x="552" y="224">Выиграл грант на развитие стартапа</text>
+          <text class="mb" x="552" y="242">У стартапа &gt;1000 пользователей</text>
+          <text class="mb" x="552" y="260">Аудитория ТГ-канала &gt;1000</text>
+          <text class="mt alt" x="552" y="398">2027 · другая компания</text>
+          <text class="mb alt" x="552" y="416">Аналитик в Яндекс / Сбер</text>
+          <text class="mb alt" x="552" y="434">Развитие стартапа на собственные средства</text>
+          <text class="mb alt" x="552" y="452">Аудитория ИИ-стартапа &gt;500 человек</text>
+          <text class="mb alt" x="552" y="470">Аудитория ТГ-канала &gt;1000</text>
+          <text class="tick" x="525" y="518" text-anchor="middle">2027</text>
+        </g>
+
+        <g class="stage" data-s="2" id="stage2">
+          <path id="segB" class="draw" d="M525,270 L880,130" style="stroke:var(--blue)"/>
+          <path id="segBalt" class="draw alt" d="M525,370 L880,262" style="stroke:var(--muted)"/>
+          <circle class="nd" cx="880" cy="130" r="9"/>
+          <circle class="nd alt" cx="880" cy="262" r="6"/>
+          <text class="mt" x="855" y="62" text-anchor="end">2029 · +3 ГОДА</text>
+          <text class="mb" x="855" y="84" text-anchor="end">CPO</text>
+          <text class="mb" x="855" y="102" text-anchor="end">Преподавание в университете</text>
+          <text class="mb" x="855" y="120" text-anchor="end">Спикер на крупных форумах</text>
+          <text class="mb" x="855" y="138" text-anchor="end">Некоммерческий проект по профориентации</text>
+          <text class="mt alt" x="855" y="290" text-anchor="end">2029 · другая компания</text>
+          <text class="mb alt" x="855" y="308" text-anchor="end">Руководитель департамента в Яндекс / Сбер</text>
+          <text class="mb alt" x="855" y="326" text-anchor="end">Научное развитие</text>
+          <text class="mb alt" x="855" y="344" text-anchor="end">Некоммерческий проект по профориентации</text>
+          <text class="tick" x="880" y="518" text-anchor="middle">2029</text>
+        </g>
+
+        <text class="yl" x="1000" y="518" text-anchor="end">время →</text>
+      </svg>
+    </div>
+
+    <div class="card" style="--accent:var(--red)">
+      <h3><b>▮</b> Риски</h3>
+      <div id="risks"></div>
+    </div>
+  </div>
+
+  <section class="acc" id="accSection">
+    <h3>★ Катализаторы роста: Академия ПМЭФ <span class="hint">наведи на карточку — подсветится метрика, на которую это влияет</span></h3>
+    <div class="accs" id="accs"></div>
+  </section>
+
+
+</div>
+</section>
+
+<script>
+const KPI_BY_PERIOD = [
+  [ // 2026 · Now
+    {id:'pos',   icon:'👤', c:'--blue',   name:'Позиция', from:'Стажёр', fromLabel:'Сейчас', to:'Мидл специалист', toLabel:'Цель к концу 2026'},
+    {id:'users', icon:'👥', c:'--green',  name:'Пользователи продукта', from:'300', fromLabel:'Сейчас', to:'1 000', toLabel:'Цель к концу 2026'},
+    {id:'tg',    icon:'📣', c:'--violet', name:'Аудитория ТГ-канала', from:'130', fromLabel:'Сейчас', to:'1 000', toLabel:'Цель к концу 2026'},
+    {id:'talks', icon:'🎤', c:'--amber',  name:'Выступлений в год', from:'2', fromLabel:'Сейчас', to:'10', toLabel:'Цель к концу 2026'}
+  ],
+  [ // 2027 · +1Y
+    {id:'pos',   icon:'👤', c:'--blue',   name:'Позиция', from:'Мидл', fromLabel:'Было (2026)', to:'Синьёр левел', toLabel:'Цель к 2027'},
+    {id:'acad',  icon:'🎓', c:'--green',  name:'Академические', from:null, to:'Магистратура в целевом университете, лаборант', toLabel:'Цель к 2027'},
+    {id:'brand', icon:'📣', c:'--violet', name:'Личный бренд', from:'Выступления на небольших мероприятиях', fromLabel:'Было (2026)', to:'Большие форумы в роли спикера, комьюнити из канала и хаб возможностей', toLabel:'Цель к 2027'},
+    {id:'ai',    icon:'🤖', c:'--amber',  name:'ИИ проект', from:null, to:'Open Source, автономное развитие', toLabel:'Цель к 2027'}
+  ],
+  [ // 2029 · +3Y
+    {id:'pos',    icon:'👤', c:'--blue',   name:'Позиция', from:'Синьёр', fromLabel:'Было (2027)', to:'Руководитель продукта (CPO)', toLabel:'Цель к 2029'},
+    {id:'sci',    icon:'🎓', c:'--green',  name:'Научное', from:'Ассистентство', fromLabel:'Было (2027)', to:'Преподавание в университете', toLabel:'Цель к 2029'},
+    {id:'brand2', icon:'📣', c:'--violet', name:'Персональный бренд', from:'Рассказываю о возможностях', fromLabel:'Было (2027)', to:'Создаю возможности', toLabel:'Цель к 2029'},
+    {id:'proj',   icon:'🚀', c:'--amber',  name:'Проект', from:null, to:'Некоммерческий проект по профориентации и обучению технологиям школьников из малых городов', toLabel:'Цель к 2029'}
+  ]
+];
+const COMMENT_INTRO = 'Через KPI-карточки визуализирую свои основные направления развития и количественные показатели, через которые я буду отслеживать достижение целей.';
+const COMMENTS = [
+  { title:'Цели на 2026 год', mission:null, goals:[
+    {n:'1', b:'Карьера', t:'попадание в штат Райффайзенбанка и рост до мидл-специалиста к концу года, профессиональное развитие'},
+    {n:'2', b:'ИИ-стартап', t:'победа в грантовом конкурсе для получения финансирования на развитие проекта, достижение целевого количества пользователей'},
+    {n:'3', b:'Аудитория ТГ-канала', t:'достижение аудитории в тысячу человек, 10 успешных кейсов менторинга'},
+    {n:'4', b:'Личный бренд', t:'10 выступлений в роли спикера на мероприятиях, выступление на мероприятии перед аудиторией 100+ человек'}
+  ]},
+  { title:'Цели на 2027 год', mission:null, goals:[
+    {n:'1', b:'Позиция', t:'становление специалистом уровня синьёр'},
+    {n:'2', b:'Академические', t:'поступление в магистратуру целевого университета по направлению ИИ'},
+    {n:'3', b:'Личный бренд', t:'первые выступления на больших форумах в роли спикера, превращение канала в комьюнити и хаб возможностей'},
+    {n:'4', b:'ИИ-проект', t:'переход на автономное развитие и поддержку — open source'}
+  ]},
+  { title:'Цели на 2029', mission:'Создавать большие и значимые проекты. Отдавать миру через образование и возможности.', goals:[
+    {n:'1', b:'Профессиональное', t:'достижение уровня CPO в компании'},
+    {n:'2', b:'Научное', t:'развитие как преподавателя в университете'},
+    {n:'3', b:'Личный бренд', t:'сам создаю возможности для других, регулярные выступления в роли спикера на крупных форумах'},
+    {n:'4', b:'Проект', t:'создание некоммерческого проекта по профориентации и обучению технологиям школьников из малых городов'}
+  ]}
+];
+const SKILLS = [
+  {n:'Коммуникация', v:[50,70,90]}, {n:'Навыки публичных выступлений и Персональный бренд', v:[20,60,85]},
+  {n:'Профессиональная насмотренность', v:[40,65,85]}, {n:'Мышление', v:[35,60,85]},
+  {n:'Технические навыки', v:[70,85,95]}
+];
+const RES_COMMENT = 'В течение годовой программы Академия работает как прямой катализатор развития. После выпуска она превращается в долговременный ресурс. Комьюнити и наработанные контакты продолжают открывать возможности.';
+const RES_BY_PERIOD = [
+  { caption:null, items:[
+    {c:'--blue',   b:'Менторы и эксперты',           p:'эксперты на форумах, руководители топовых компаний, работающие аналитики'},
+    {c:'--amber',  b:'Проекты и сообщества',         p:'Академия ПМЭФ, Фонд «Будущие лидеры», проект «Поколение», сообщество выпускников SPARK'},
+    {c:'--cyan',   b:'Форумы Росконгресса',          p:'ПМЭФ, ВЭФ, КЭФ — практика и повестка из первых уст'},
+    {c:'--green',  b:'Гранты и конкурсы',            p:'«Твой Ход», бизнес-инкубаторы'},
+    {c:'--violet', b:'Профессиональное развитие',    p:'Т-Академия, Академия аналитиков Авито, AI Masters'}
+  ]},
+  { caption:'2027 — «нужны площадки и первая команда»', items:[
+    {c:'--blue',   b:'Научный руководитель и вуз',   p:'поддержка для поступления в магистратуру и работы лаборантом, вход в академическую среду'},
+    {c:'--violet', b:'Комьюнити канала',             p:'аудитория ТГ и хаб возможностей как база для собственного сообщества'},
+    {c:'--green',  b:'Соратники по проекту',          p:'люди, готовые развивать ИИ-проект по поиску возможностей'},
+    {c:'--cyan',   b:'Международные контакты',       p:'информация о передовых технологиях, трендах, приглашения на международные конференции'},
+    {c:'--amber',  b:'Сеть Академии и Форумы',       p:'комьюнити, форумы и мероприятия Академии как сцена для первых крупных выступлений'}
+  ]},
+  { caption:'2029 — «нужны масштаб, команда и партнёрства»', items:[
+    {c:'--blue',   b:'Команда в компании',           p:'люди, которыми руковожу как CPO'},
+    {c:'--green',  b:'Университет и студенты',       p:'сильный преподавательский состав, мотивированные студенты'},
+    {c:'--amber',  b:'Партнёры социального проекта', p:'фонды, школы, образовательные платформы'},
+    {c:'--cyan',   b:'Финансирование и гранты',      p:'гранты, спонсоры, институциональная поддержка'},
+    {c:'--red',    b:'Личный бренд как ресурс',      p:'накопленная аудитория и репутация спикера — люди сами находят и предлагают возможности'},
+    {c:'--violet', b:'Сеть Академии и форумов',      p:'комьюнити и контакты как ресурс для масштабирования'}
+  ]}
+];
+const RISKS_BY_PERIOD = [
+  [ // 2026
+    {level:'critical', title:'Перегрузка и распыление', fallback:'Решение: определение основных целей и задач, использование техник тайм-менеджмента.'},
+    {level:'warn', title:'Не пройду в штат Райффайзена', fallback:'Запасной план: пройду аналитиком в другие компании. Обладаю ценными навыками для рынка.'},
+    {level:'warn', title:'Не дадут грант на проект', fallback:'Запасной план: продолжаю развитие своими силами и использую собственные финансовые ресурсы.'},
+    {level:'info', title:'Не возьмут в Академию', fallback:'Запасной план: траектория не меняется. Академия для меня важный ускоритель развития, и в случае непрохождения буду искать альтернативные возможности.'}
+  ],
+  [ // 2027
+    {level:'critical', title:'Карьера съедает всё время', body:'Нагрузка на работе, учёба, личные проекты.', fallback:'Решение: держу карьеру ядром, а личный бренд и проект строю как производные от неё, рассказываю о том, что делаю на работе, проект развиваю на автономном режиме.'},
+    {level:'warn', title:'Не поступлю в целевую магистратуру', fallback:'Запасной план: поступаю в следующий по приоритетности университет или беру дополнительный год на подготовку. Для меня важны реальные знания, которые смогу получить.'},
+    {level:'warn', title:'Проект заглохнет без моего участия', fallback:'Запасной план: заинтересованная часть комьюнити поддержит проект на нужном уровне.'},
+    {level:'info', title:'Личный бренд растёт медленно', fallback:'Запасной план: основная ставка на качество контента и личный рост, аудитория вторична.'}
+  ],
+  [ // 2029
+    {level:'critical', title:'Не справлюсь с масштабом руководителя', body:'Переход от исполнителя к CPO требует делегирования и управления командой.', fallback:'Решение: заранее прокачиваю управленческие компетенции через лидирование проектов и прохождение курсов.'},
+    {level:'warn', title:'Социальный проект не взлетит', fallback:'Запасной план: начинаю с малого пилота, масштабирую по мере появления эффекта. Даже небольшие локальные достижения ценны.'},
+    {level:'warn', title:'Сложность совмещения', fallback:'Запасной план: фокусируюсь на одном ядре, на аналитика и ИИ, а преподавание и проект растут из этой же экспертизы.'},
+    {level:'info', title:'Выгорание на длинной дистанции', fallback:'Запасной план: баланс как осознанная цель, поиск источников энергии и качественное восстановление.'}
+  ]
+];
+const RISK_CLASS = {critical:'crit', warn:'warn', info:'info'};
+const RISK_TAG = {critical:'КРИТИЧНО', warn:'ПРЕДУПРЕЖДЕНИЕ', info:'ИНФО'};
+
+function renderRisks(){
+  document.getElementById('risks').innerHTML = RISKS_BY_PERIOD[P].map(r=>`
+    <div class="al ${RISK_CLASS[r.level]}">
+      <div class="tag"><i></i>${RISK_TAG[r.level]}</div>
+      <b>${r.title}</b>
+      <p>${r.body ? r.body+'<br>' : ''}${r.fallback}</p>
+    </div>`).join('');
+}
+
+const ACC = [
+  {c:'--blue',   t:'pos',   b:'Доступ к топ-менеджменту',  p:'нетворкинг на форумах и получение рекомендаций',                                              m:'Позиция'},
+  {c:'--amber',  t:'talks', b:'Площадка для выступлений',  p:'практика публичных выступлений и обратная связь',                                             m:'Выступлений в год'},
+  {c:'--green',  t:'users', b:'Экспертиза по грантам',     p:'консультация у студентов с опытом побед в грантах о правильном заполнении заявки',            m:'Пользователи продукта'},
+  {c:'--violet', t:'tg',    b:'Среда сильных сверстников', p:'сильная среда для развития и площадка для пиара канала',                                      m:'Аудитория ТГ-канала'},
+  {c:'--cyan',   t:'bi',    b:'Практики от лидеров рынка', p:'передовые технологии и лучшие практики компаний для внедрения на работе',                     m:'Дашборды / пайплайны'}
+];
+let P = 0;
+
+document.getElementById('openDash').addEventListener('click',()=>{
+  document.getElementById('intro').style.display='none';
+  document.getElementById('dashboard').style.display='block';
+  window.scrollTo({top:0});
+});
+document.getElementById('backToIntro').addEventListener('click',()=>{
+  document.getElementById('dashboard').style.display='none';
+  document.getElementById('intro').style.display='flex';
+  window.scrollTo({top:0});
+});
+
+const valCls = s => s && s.length>14 ? 'val val-sm' : 'val';
+
+function renderKPICards(){
+  const cardHtml = KPI_BY_PERIOD[P].map(k=>`
+    <article class="card kpi" id="kpi-${k.id}" style="--focus:var(${k.c})">
+      <div class="top"><span class="chip" style="background:color-mix(in srgb, var(${k.c}) 18%, transparent)">${k.icon}</span><span>${k.name}</span></div>
+      <div class="cols cols-2">
+        <div class="cell on"><div class="lbl">${k.toLabel}</div><div class="${valCls(k.to)}">${k.to}</div></div>
+        ${k.from ? `<div class="arrow">↓</div><div class="cell"><div class="lbl">${k.fromLabel}</div><div class="${valCls(k.from)}">${k.from}</div></div>` : ''}
+      </div>
+    </article>`).join('') + `
+    <article class="card comment" id="kpi-comment" style="--focus:var(--violet)">
+      <div class="top"><span class="chip" style="background:color-mix(in srgb, var(--violet) 18%, transparent)">🗒️</span><span>Комментарий</span></div>
+      <p class="comment-intro">${COMMENT_INTRO}</p>
+      <div class="comment-goals" id="commentGoals"></div>
+    </article>`;
+  document.getElementById('kpis').innerHTML = cardHtml;
+}
+
+document.getElementById('skills').innerHTML = SKILLS.map((s,i)=>`
+  <div class="sk"><div class="row"><b>${s.n}</b><span class="pc mono" id="pc-${i}">0%</span></div><div class="track"><div class="fill" id="fl-${i}"></div></div></div>`).join('');
+
+function renderRes(){
+  const rp = RES_BY_PERIOD[P];
+  document.getElementById('res').innerHTML =
+    (rp.caption ? `<div class="res-caption">${rp.caption}</div>` : '') +
+    rp.items.map(r=>`<div class="res"><div class="bar" style="background:var(${r.c})"></div><div><b>${r.b}</b><p>${r.p}</p></div></div>`).join('') +
+    `<p class="res-note">${RES_COMMENT}</p>`;
+}
+
+document.getElementById('accs').innerHTML = ACC.map(a=>`
+  <button style="--c:var(${a.c})" data-t="${a.t}" aria-label="${a.b} — влияет на метрику ${a.m}"><b>${a.b}</b><p>${a.p}</p><span class="to">→ ${a.m}</span></button>`).join('');
+
+['segA','segAalt','segB','segBalt'].forEach(id=>{
+  const p=document.getElementById(id);
+  const len=p.getTotalLength();
+  p.style.strokeDasharray=len;
+  p.style.strokeDashoffset=len;
+});
+
+const PERIOD_CAP=['2026 · Сейчас','2027 · +1 год','2029 · +3 года'];
+const CHART_CAP=['Показан период: 2026 (сейчас)','Показан период: 2026 → 2027 (+1 год)','Показан период: 2026 → 2029 (+3 года)'];
+
+function paint(){
+  renderKPICards();
+  renderRes();
+  renderRisks();
+  document.getElementById('accSection').style.display = P===0 ? '' : 'none';
+
+  document.querySelectorAll('.stage[data-s]').forEach(g=>{
+    const on = +g.dataset.s<=P;
+    g.classList.toggle('on', on);
+    g.querySelectorAll('.draw').forEach(p=>{
+      p.style.strokeDashoffset = on ? 0 : p.getTotalLength();
+    });
+  });
+
+  SKILLS.forEach((s,i)=>{
+    const v=s.v[P], f=document.getElementById('fl-'+i);
+    f.style.width=v+'%';
+    f.style.background = v>=75 ? 'var(--green)' : v>=45 ? 'var(--amber)' : 'var(--red)';
+    document.getElementById('pc-'+i).textContent=v+'%';
+  });
+
+  document.getElementById('gapNote').textContent=[
+    'Красным показаны мои зоны роста. Основными для меня являются навык публичных выступлений и представление себя.',
+    'Через участие в форумах и выступления на внутренних мероприятиях я прокачал навык публичных выступлений и развил персональный бренд. Посещая мероприятия с лучшими спикерами, я развил профессиональную насмотренность и стал смотреть на многие вещи под другим углом.',
+    'Основные зоны роста, которые выделял в 2026 году прокачаны, сосредоточен на карьерном развитие.'
+  ][P];
+
+  document.getElementById('periodCap').textContent = PERIOD_CAP[P];
+  document.getElementById('chartCap').textContent = CHART_CAP[P];
+
+  const c = COMMENTS[P];
+  document.getElementById('commentGoals').innerHTML =
+    `<div class="g-title">${c.title}</div>` +
+    (c.mission ? `<div class="mission"><b>Миссия</b>${c.mission}</div>` : '') +
+    c.goals.map(g=>`<div class="goal-item"><span class="n">${g.n}</span><span><b>${g.b}.</b> ${g.t.charAt(0).toUpperCase()+g.t.slice(1)}</span></div>`).join('');
+}
+
+document.querySelectorAll('.filters button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    P=+b.dataset.p;
+    document.querySelectorAll('.filters button').forEach(x=>x.setAttribute('aria-selected', x===b));
+    paint();
+  });
+});
+
+document.querySelectorAll('.accs button').forEach(b=>{
+  const on=()=>{const kpi=document.getElementById('kpi-'+b.dataset.t); if(kpi) kpi.classList.add('lit');};
+  const off=()=>{const kpi=document.getElementById('kpi-'+b.dataset.t); if(kpi) kpi.classList.remove('lit');};
+  b.addEventListener('mouseenter',on); b.addEventListener('mouseleave',off);
+  b.addEventListener('focus',on); b.addEventListener('blur',off);
+  b.addEventListener('click',()=>{const kpi=document.getElementById('kpi-'+b.dataset.t); if(kpi) kpi.scrollIntoView({behavior:'smooth',block:'center'});});
+});
+
+paint();
+</script>
+</body>
+</html>
